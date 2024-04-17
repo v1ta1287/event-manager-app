@@ -1,4 +1,4 @@
-package com.example.eventmanagerapp;
+package com.example.eventmanagerapp.controller;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.eventmanagerapp.R;
 
 public class LoginActivity extends AppCompatActivity {
     EditText username;

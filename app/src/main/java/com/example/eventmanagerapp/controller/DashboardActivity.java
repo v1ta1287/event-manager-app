@@ -1,10 +1,12 @@
-package com.example.eventmanagerapp;
+package com.example.eventmanagerapp.controller;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
+import com.example.eventmanagerapp.R;
 
 public class DashboardActivity extends AppCompatActivity {
 

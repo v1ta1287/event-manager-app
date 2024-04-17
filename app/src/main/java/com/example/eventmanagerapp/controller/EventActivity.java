@@ -1,4 +1,4 @@
-package com.example.eventmanagerapp;
+package com.example.eventmanagerapp.controller;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +17,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
+
+import com.example.eventmanagerapp.R;
 
 import java.util.Objects;
 import java.util.Random;

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/option_refresh"
+        android:title="Refresh" />
+    <item
+        android:id="@+id/option_clear_event"
+        android:title="Clear Event Form" />
+    <item
+        android:id="@+id/option_delete_categories"
+        android:title="Delete Categories" />
+    <item
+        android:id="@+id/option_delete_events"
+        android:title="Delete Events" />
+</menu>

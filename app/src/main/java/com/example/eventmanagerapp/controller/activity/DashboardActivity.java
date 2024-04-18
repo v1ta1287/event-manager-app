@@ -1,4 +1,4 @@
-package com.example.eventmanagerapp.controller;
+package com.example.eventmanagerapp.controller.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -68,7 +68,7 @@ public class DashboardActivity extends AppCompatActivity {
 
     public void startEventActivityButton(View view){
         // switch to activity that shows fruit details
-        Intent intent = new Intent(this, EventActivity.class);
+        Intent intent = new Intent(this, ListEventActivity.class);
         startActivity(intent);
     }
 

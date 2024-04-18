@@ -1,4 +1,4 @@
-package com.example.eventmanagerapp.controller;
+package com.example.eventmanagerapp.controller.handler;
 
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;

@@ -14,4 +14,44 @@ public class Event {
         this.ticketsAvailable = ticketsAvailable;
         this.isActive = isActive;
     }
+
+    public String getEventId() {
+        return eventId;
+    }
+
+    public void setEventId(String eventId) {
+        this.eventId = eventId;
+    }
+
+    public String getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getTicketsAvailable() {
+        return ticketsAvailable;
+    }
+
+    public void setTicketsAvailable(int ticketsAvailable) {
+        this.ticketsAvailable = ticketsAvailable;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
 }

@@ -1,4 +1,4 @@
-package com.example.eventmanagerapp.controller;
+package com.example.eventmanagerapp.controller.activity;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +19,7 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 import com.example.eventmanagerapp.R;
+import com.example.eventmanagerapp.controller.handler.SMSReceiver;
 
 import java.util.Objects;
 import java.util.Random;

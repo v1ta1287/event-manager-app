@@ -6,23 +6,40 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.EditText;
+import android.widget.Switch;
+import android.widget.Toast;
 
 import com.example.eventmanagerapp.R;
 import com.example.eventmanagerapp.controller.fragment.FragmentListCategory;
+import com.example.eventmanagerapp.controller.util.IdGeneratorUtility;
+import com.example.eventmanagerapp.controller.util.SharedPreferencesUtility;
+import com.example.eventmanagerapp.model.Category;
+import com.example.eventmanagerapp.model.Event;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 
 public class DashboardActivity extends AppCompatActivity {
     DrawerLayout drawerlayout;
     NavigationView navigationView;
     Toolbar toolbar;
-
     public ActionBarDrawerToggle actionBarDrawerToggle;
+
+    EditText eventName;
+    EditText eventCategoryId;
+    EditText eventTickets;
+    EditText eventId;
+    @SuppressLint("UseSwitchCompatOrMaterialCode")
+    Switch eventIsActive;
+    FloatingActionButton addEventFab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,15 +49,21 @@ public class DashboardActivity extends AppCompatActivity {
         drawerlayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.dashboard_toolbar);
-
         setSupportActionBar(toolbar);
-
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawerlayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerlayout.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(new MyNavigationListener());
 
+        eventId = findViewById((R.id.editEventId));
+        eventName = findViewById((R.id.editEventName));
+        eventCategoryId = findViewById((R.id.editEventCategoryId));
+        eventTickets = findViewById((R.id.editTicketsAvailable));
+        eventIsActive = findViewById((R.id.eventActiveSwitch));
+        addEventFab = findViewById((R.id.fabAddEvent));
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.dashboard_fragment,new FragmentListCategory()).addToBackStack("f2").commit();
     }
 
     @Override
@@ -49,16 +72,40 @@ public class DashboardActivity extends AppCompatActivity {
         return true;
     }
 
+    public void onFabClick(View view) {
+        String randomEventId = IdGeneratorUtility.generateEventId();
+
+        Event newEvent = new Event(randomEventId, eventCategoryId.getText().toString(),
+                eventName.getText().toString(),
+                Integer.parseInt(eventTickets.getText().toString()),
+                Boolean.parseBoolean(eventIsActive.getText().toString()));
+
+        // save to shared preferences
+        SharedPreferencesUtility.saveEventToSharedPreference(getApplicationContext(), newEvent);
+
+        Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
+    }
+
+    public void clearForm() {
+        eventId.setText("");
+        eventName.setText("");
+        eventCategoryId.setText("");
+        eventTickets.setText("");
+        eventIsActive.setChecked(false);
+    }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.option_refresh) {
             getSupportFragmentManager().beginTransaction().replace(R.id.dashboard_fragment,new FragmentListCategory()).addToBackStack("f2").commit();
         } else if (itemId == R.id.option_clear_event) {
-
+            clearForm();
         } else if (itemId == R.id.option_delete_categories) {
-
+            SharedPreferencesUtility.clearCategoriesFromSharedPreferences(getApplicationContext());
         } else if (itemId == R.id.option_delete_events){
+            SharedPreferencesUtility.clearEventsFromSharedPreferences(getApplicationContext());
 
         }
         return true;

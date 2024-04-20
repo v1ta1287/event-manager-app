@@ -10,8 +10,9 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Objects;
 
-public class SharedPreferencesHandler {
+public class SharedPreferencesUtility {
     private final static String categorySharedPreferenceFile = "CATEGORY_LIST";
     private final static String categorySharedPreferenceString = "categories";
     private final static String eventSharedPreferenceFile = "EVENT_LIST";
@@ -46,9 +47,9 @@ public class SharedPreferencesHandler {
 
     public static void saveEventToSharedPreference(Context context, Event event) {
         // save arguments to shared preferences
-        SharedPreferences sharedPreferences = context.getSharedPreferences(eventSharedPreferenceFile, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        String sharedPreferencesString = sharedPreferences.getString(eventSharedPreferenceString, "[]");
+        SharedPreferences eventSharedPreferences = context.getSharedPreferences(eventSharedPreferenceFile, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = eventSharedPreferences.edit();
+        String sharedPreferencesString = eventSharedPreferences.getString(eventSharedPreferenceString, "[]");
 
         Gson gson = new Gson();
         Type type = new TypeToken<ArrayList<Event>>() {}.getType();
@@ -58,6 +59,20 @@ public class SharedPreferencesHandler {
         String updatedSharedPreferencesString = gson.toJson(eventArrayList);
         editor.putString(eventSharedPreferenceString, updatedSharedPreferencesString);
         editor.apply();
+
+        SharedPreferences categorySharedPreferences = context.getSharedPreferences(categorySharedPreferenceFile, Context.MODE_PRIVATE);
+        SharedPreferences.Editor categoryEditor = categorySharedPreferences.edit();
+        ArrayList<Category> categoryArrayList = getCategoriesFromSharedPreferences(context);
+
+        for (Category category: categoryArrayList) {
+            if (Objects.equals(event.getCategoryId(), category.getCategoryId())){
+                category.setEventCount(category.getEventCount() + 1);
+            }
+        }
+
+        String updatedCategories = gson.toJson(categoryArrayList);
+        categoryEditor.putString(categorySharedPreferenceString, updatedCategories);
+        categoryEditor.apply();
     }
 
     public static ArrayList<Event> getEventsFromSharedPreferences(Context context){
@@ -71,4 +86,38 @@ public class SharedPreferencesHandler {
 
         return eventArrayList;
     }
+
+    public static void clearCategoriesFromSharedPreferences(Context context){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(categorySharedPreferenceFile, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(categorySharedPreferenceString, "[]");
+        editor.apply();
+    }
+
+    public static void clearEventsFromSharedPreferences(Context context){
+        SharedPreferences eventSharedPreferences = context.getSharedPreferences(eventSharedPreferenceFile, Context.MODE_PRIVATE);
+        SharedPreferences.Editor eventEditor = eventSharedPreferences.edit();
+        eventEditor.putString(eventSharedPreferenceString, "[]");
+        eventEditor.apply();
+
+        SharedPreferences categorySharedPreferences = context.getSharedPreferences(categorySharedPreferenceFile, Context.MODE_PRIVATE);
+        SharedPreferences.Editor categoryEditor = categorySharedPreferences.edit();
+        ArrayList<Event> eventArrayList = getEventsFromSharedPreferences(context);
+        ArrayList<Category> categoryArrayList = getCategoriesFromSharedPreferences(context);
+
+        for(Event event : eventArrayList){
+            for (Category category: categoryArrayList) {
+                if (Objects.equals(event.getCategoryId(), category.getCategoryId())){
+                    category.setEventCount(category.getEventCount() - 1);
+                }
+            }
+        }
+
+        Gson gson = new Gson();
+        String updatedCategories = gson.toJson(categoryArrayList);
+        categoryEditor.putString(categorySharedPreferenceString, updatedCategories);
+        categoryEditor.apply();
+    }
+
+
 }

@@ -31,11 +31,12 @@
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAddEvent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/fab"
-        android:layout_margin="45dp"
         android:layout_gravity="bottom|end"
-        app:srcCompat="@drawable/baseline_add_24"/>
+        android:layout_margin="45dp"
+        android:onClick="onFabClick"
+        app:srcCompat="@drawable/baseline_add_24" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

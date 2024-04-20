@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 
 import com.example.eventmanagerapp.R;
 import com.example.eventmanagerapp.controller.handler.CategoryRecyclerAdapter;
-import com.example.eventmanagerapp.controller.util.SharedPreferencesHandler;
+import com.example.eventmanagerapp.controller.util.SharedPreferencesUtility;
 import com.example.eventmanagerapp.model.Category;
 
 import java.util.ArrayList;
@@ -92,7 +92,7 @@ public class FragmentListCategory extends Fragment {
         recyclerAdapter.setData(listCategories);
         recyclerView.setAdapter(recyclerAdapter);
 
-        ArrayList<Category> categoryListFromSharedPreference = SharedPreferencesHandler.getCategoriesFromSharedPreferences(requireActivity());
+        ArrayList<Category> categoryListFromSharedPreference = SharedPreferencesUtility.getCategoriesFromSharedPreferences(requireActivity());
         listCategories.addAll(categoryListFromSharedPreference);
     }
 

@@ -9,7 +9,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,12 +19,14 @@ import android.widget.Toast;
 
 import com.example.eventmanagerapp.R;
 import com.example.eventmanagerapp.controller.handler.SMSReceiver;
+import com.example.eventmanagerapp.controller.util.SharedPreferencesHandler;
+import com.example.eventmanagerapp.model.Category;
 
 import java.util.Objects;
 import java.util.Random;
 import java.util.StringTokenizer;
 
-public class CategoryActivity extends AppCompatActivity {
+public class NewCategoryActivity extends AppCompatActivity {
 
     EditText categoryName;
     EditText categoryCount;
@@ -44,7 +45,7 @@ public class CategoryActivity extends AppCompatActivity {
                 if (Objects.equals(msgType, "category")) {
                     prefillCategoryForm(msg);
                 } else {
-                    Toast.makeText(CategoryActivity.this, "SMS message had incorrect values or format", Toast.LENGTH_LONG).show();
+                    Toast.makeText(NewCategoryActivity.this, "SMS message had incorrect values or format", Toast.LENGTH_LONG).show();
                 }
             }
             catch (Exception e) {
@@ -148,7 +149,7 @@ public class CategoryActivity extends AppCompatActivity {
         }
         // otherwise, show error toast message
         else {
-            Toast.makeText(CategoryActivity.this, "SMS message had incorrect values or format", Toast.LENGTH_LONG).show();
+            Toast.makeText(NewCategoryActivity.this, "SMS message had incorrect values or format", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -183,41 +184,22 @@ public class CategoryActivity extends AppCompatActivity {
         if (categoryName.getText().toString().length() > 0){
             String randomCategoryId = generateCategoryId();
 
-            // do error handling if category count is empty/not an integer
-            int categoryCountInt;
-            try {
-                categoryCountInt = Integer.parseInt(categoryCount.getText().toString());
-            } catch (NumberFormatException e) {
-                // if theres no valid value, set default as 0
-                categoryCountInt = 0;
-            }
+            Category newCategory = new Category(randomCategoryId, categoryName.getText().toString(),
+                    Integer.parseInt(categoryCount.getText().toString()), Boolean.parseBoolean(categoryIsActive.getText().toString()));
 
             // save to shared preferences
-            saveCategoryToSharedPreference(randomCategoryId, categoryName.getText().toString(),
-                    categoryCountInt,
-                    Boolean.parseBoolean(categoryIsActive.getText().toString()));
+            SharedPreferencesHandler.saveCategoryToSharedPreference(getApplicationContext(), newCategory);
             Toast.makeText(getApplicationContext(), "Category saved successfully: " + randomCategoryId, Toast.LENGTH_LONG).show();
             categoryId.setText(randomCategoryId);
 
+            Intent intent = new Intent(this, DashboardActivity.class);
+            startActivity(intent);
         }
         else {
             Toast.makeText(getApplicationContext(), "Name field cannot be empty", Toast.LENGTH_LONG).show();
         }
     }
 
-    // save event details to shared preferences
-    public void saveCategoryToSharedPreference(String id, String name, int count, boolean isActive ){
-        // save arguments to shared preferences
-        SharedPreferences sharedPreferences = getSharedPreferences("CATEGORY_INFO", MODE_PRIVATE);
 
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        editor.putString("CATEGORY_ID", id);
-        editor.putString("CATEGORY_NAME", name);
-        editor.putInt("CATEGORY_COUNT", count);
-        editor.putBoolean("CATEGORY_IS_ACTIVE", isActive);
-
-        editor.apply();
-    }
 
 }

@@ -39,7 +39,7 @@
             android:name=".controller.activity.EventActivity"
             android:exported="false" />
         <activity
-            android:name=".controller.activity.CategoryActivity"
+            android:name=".controller.activity.NewCategoryActivity"
             android:exported="false" />
         <activity
             android:name=".controller.activity.DashboardActivity"

@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 
 import com.example.eventmanagerapp.R;
 import com.example.eventmanagerapp.controller.fragment.FragmentListCategory;
@@ -26,7 +27,7 @@ public class DashboardActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.drawer_layout);
+        setContentView(R.layout.dashboard_bar_layout);
 
         drawerlayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
@@ -40,8 +41,6 @@ public class DashboardActivity extends AppCompatActivity {
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(new MyNavigationListener());
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.dashboard_fragment,new FragmentListCategory()).addToBackStack("f2").commit();
-
     }
 
     @Override
@@ -54,7 +53,7 @@ public class DashboardActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.option_refresh) {
-
+            getSupportFragmentManager().beginTransaction().replace(R.id.dashboard_fragment,new FragmentListCategory()).addToBackStack("f2").commit();
         } else if (itemId == R.id.option_clear_event) {
 
         } else if (itemId == R.id.option_delete_categories) {
@@ -82,6 +81,12 @@ public class DashboardActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void startNewCategoryButton(){
+        // switch to activity that shows fruit details
+        Intent intent = new Intent(this, NewCategoryActivity.class);
+        startActivity(intent);
+    }
+
     class MyNavigationListener implements NavigationView.OnNavigationItemSelectedListener {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -91,7 +96,7 @@ public class DashboardActivity extends AppCompatActivity {
             if (id == R.id.option_view_categories) {
                 startCategoryListButton();
             } else if (id == R.id.option_add_category) {
-                // Do something
+                startNewCategoryButton();
             } else if (id == R.id.option_view_events) {
                 startEventListButton();
             } else if (id == R.id.option_logout) {

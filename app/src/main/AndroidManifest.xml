@@ -20,6 +20,9 @@
         android:theme="@style/Theme.EventManagerApp"
         tools:targetApi="31">
         <activity
+            android:name=".controller.activity.ListCategoryActivity"
+            android:exported="false" />
+        <activity
             android:name=".controller.activity.ListEventActivity"
             android:exported="false" />
 

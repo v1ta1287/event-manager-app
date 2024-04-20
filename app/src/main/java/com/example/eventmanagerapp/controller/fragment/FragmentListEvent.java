@@ -81,7 +81,7 @@ public class FragmentListEvent extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        recyclerView = view.findViewById(R.id.eventRecyclerView);
+        recyclerView = view.findViewById(R.id.eventRecylerView);
 
 // A Linear RecyclerView.LayoutManager implementation which provides similar functionality to ListView.
         layoutManager = new LinearLayoutManager(getContext());

@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.eventmanagerapp.R;
+import com.example.eventmanagerapp.controller.fragment.FragmentListCategory;
 import com.google.android.material.navigation.NavigationView;
 
 public class DashboardActivity extends AppCompatActivity {
@@ -29,7 +30,7 @@ public class DashboardActivity extends AppCompatActivity {
 
         drawerlayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
-        toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.dashboard_toolbar);
 
         setSupportActionBar(toolbar);
 
@@ -38,6 +39,9 @@ public class DashboardActivity extends AppCompatActivity {
         drawerlayout.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(new MyNavigationListener());
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.dashboard_fragment,new FragmentListCategory()).addToBackStack("f2").commit();
+
     }
 
     @Override
@@ -60,15 +64,21 @@ public class DashboardActivity extends AppCompatActivity {
         }
         return true;
     }
-    public void startCategoryActivityButton(View view){
+    public void startCategoryListButton(){
         // switch to activity that shows fruit details
-        Intent intent = new Intent(this, CategoryActivity.class);
+        Intent intent = new Intent(this, ListCategoryActivity.class);
         startActivity(intent);
     }
 
-    public void startEventActivityButton(View view){
+    public void startEventListButton(){
         // switch to activity that shows fruit details
         Intent intent = new Intent(this, ListEventActivity.class);
+        startActivity(intent);
+    }
+
+    public void startLoginButton(){
+        // switch to activity that shows fruit details
+        Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
 
@@ -79,13 +89,13 @@ public class DashboardActivity extends AppCompatActivity {
             int id = item.getItemId();
 
             if (id == R.id.option_view_categories) {
-                // Do something
+                startCategoryListButton();
             } else if (id == R.id.option_add_category) {
                 // Do something
             } else if (id == R.id.option_view_events) {
-                // Do something
+                startEventListButton();
             } else if (id == R.id.option_logout) {
-                // Do something
+                startLoginButton();
             }
             // close the drawer
             drawerlayout.closeDrawers();

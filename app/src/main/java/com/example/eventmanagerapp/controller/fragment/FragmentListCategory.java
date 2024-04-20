@@ -1,14 +1,21 @@
 package com.example.eventmanagerapp.controller.fragment;
 
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.eventmanagerapp.R;
+import com.example.eventmanagerapp.controller.handler.CategoryRecyclerAdapter;
+import com.example.eventmanagerapp.model.Category;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +32,12 @@ public class FragmentListCategory extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private FragmentListEvent.OnFragmentInteractionListener mListener;
+
+    ArrayList<Category> listCategories = new ArrayList<>();
+    CategoryRecyclerAdapter recyclerAdapter;
+    RecyclerView recyclerView;
+    RecyclerView.LayoutManager layoutManager;
 
     public FragmentListCategory() {
         // Required empty public constructor
@@ -62,5 +75,58 @@ public class FragmentListCategory extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_list_category, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        recyclerView = view.findViewById(R.id.categoryRecyclerView);
+
+// A Linear RecyclerView.LayoutManager implementation which provides similar functionality to ListView.
+        layoutManager = new LinearLayoutManager(getContext());
+// Also StaggeredGridLayoutManager and GridLayoutManager or a custom Layout manager
+        recyclerView.setLayoutManager(layoutManager);
+
+        recyclerAdapter = new CategoryRecyclerAdapter();
+        recyclerAdapter.setData(listCategories);
+        recyclerView.setAdapter(recyclerAdapter);
+
+        Category testCategory =new Category("123", "Hello", 5, true);
+        listCategories.add(testCategory);
+        Category testCategory2 =new Category("555", "Teso", 5, true);
+        listCategories.add(testCategory2);
+        Category testCategory3 =new Category("666", "T23o", 5, true);
+        listCategories.add(testCategory3);
+        listCategories.add(testCategory3);
+        listCategories.add(testCategory3);
+
+        recyclerAdapter.notifyDataSetChanged();
+
+    }
+
+    public void onButtonPressed(Uri uri) {
+        if (mListener != null) {
+            mListener.onFragmentInteraction(uri);
+        }
+    }
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    /**
+     * This interface must be implemented by activities that contain this
+     * fragment to allow an interaction in this fragment to be communicated
+     * to the activity and potentially other fragments contained in that
+     * activity.
+     * <p>
+     * See the Android Training lesson <a href=
+     * "http://developer.android.com/training/basics/fragments/communicating.html"
+     * >Communicating with Other Fragments</a> for more information.
+     */
+    public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
+        void onFragmentInteraction(Uri uri);
     }
 }

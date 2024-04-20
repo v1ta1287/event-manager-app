@@ -7,20 +7,20 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.eventmanagerapp.R;
-import com.example.eventmanagerapp.controller.fragment.FragmentListEvent;
+import com.example.eventmanagerapp.controller.fragment.FragmentListCategory;
 
-public class ListEventActivity extends AppCompatActivity {
+public class ListCategoryActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.event_bar_layout);
-        Toolbar toolbar = findViewById(R.id.event_toolbar);
+        setContentView(R.layout.category_bar_layout);
+        Toolbar toolbar = findViewById(R.id.category_toolbar);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentEvent,new FragmentListEvent()).addToBackStack("f1").commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentCategory,new FragmentListCategory()).addToBackStack("f2").commit();
     }
 
     @Override

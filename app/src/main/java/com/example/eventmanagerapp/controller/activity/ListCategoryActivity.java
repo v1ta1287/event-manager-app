@@ -9,6 +9,8 @@ import android.os.Bundle;
 import com.example.eventmanagerapp.R;
 import com.example.eventmanagerapp.controller.fragment.FragmentListCategory;
 
+import java.util.Objects;
+
 public class ListCategoryActivity extends AppCompatActivity {
 
     @Override
@@ -18,7 +20,7 @@ public class ListCategoryActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.category_toolbar);
 
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragmentCategory,new FragmentListCategory()).addToBackStack("f2").commit();
     }

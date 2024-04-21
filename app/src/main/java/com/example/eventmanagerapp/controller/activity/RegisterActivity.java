@@ -10,7 +10,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.eventmanagerapp.R;
-import com.example.eventmanagerapp.controller.activity.LoginActivity;
 
 public class RegisterActivity extends AppCompatActivity {
     EditText username;

@@ -89,12 +89,9 @@ public class DashboardActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().replace(R.id.dashboard_fragment,new FragmentListCategory()).addToBackStack("f2").commit();
 
             Snackbar snackbar = Snackbar.make(view, "Event " + randomEventId + " successfully added", Snackbar.LENGTH_LONG)
-                    .setAction("Undo Save", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            SharedPreferencesUtility.undoAddEventToSharedPreferences(getApplicationContext());
-                            getSupportFragmentManager().beginTransaction().replace(R.id.dashboard_fragment,new FragmentListCategory()).addToBackStack("f2").commit();
-                        }
+                    .setAction("Undo Save", v -> {
+                        SharedPreferencesUtility.undoAddEventToSharedPreferences(getApplicationContext());
+                        getSupportFragmentManager().beginTransaction().replace(R.id.dashboard_fragment,new FragmentListCategory()).addToBackStack("f2").commit();
                     });
             snackbar.show();
         } catch (InvalidNameException e){

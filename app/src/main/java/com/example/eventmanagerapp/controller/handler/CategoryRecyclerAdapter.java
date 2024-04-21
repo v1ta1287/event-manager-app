@@ -1,5 +1,6 @@
 package com.example.eventmanagerapp.controller.handler;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.eventmanagerapp.R;
 import com.example.eventmanagerapp.model.Category;
-import com.example.eventmanagerapp.model.Event;
 
 import java.util.ArrayList;
 
@@ -23,10 +23,10 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
     @Override
     public CategoryRecyclerAdapter.CustomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.category_card_layout, parent, false);
-        CategoryRecyclerAdapter.CustomViewHolder viewHolder = new CategoryRecyclerAdapter.CustomViewHolder(v);
-        return viewHolder;
+        return new CustomViewHolder(v);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull CustomViewHolder holder, int position) {
         holder.tvCategoryId.setText(data.get(position).getCategoryId());
@@ -49,7 +49,7 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
         return 0;
     }
 
-    public class CustomViewHolder extends RecyclerView.ViewHolder {
+    public static class CustomViewHolder extends RecyclerView.ViewHolder {
 
         public TextView tvCategoryId;
         public TextView tvCategoryName;

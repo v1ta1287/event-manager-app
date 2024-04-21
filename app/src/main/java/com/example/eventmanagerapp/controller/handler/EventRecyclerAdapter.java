@@ -1,5 +1,6 @@
 package com.example.eventmanagerapp.controller.handler;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,7 @@ import com.example.eventmanagerapp.model.Event;
 import java.util.ArrayList;
 
 public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdapter.CustomViewHolder> {
-    ArrayList<Event> data = new ArrayList<Event>();
+    ArrayList<Event> data = new ArrayList<>();
     public void setData(ArrayList<Event> data) {
         this.data = data;
     }
@@ -22,10 +23,10 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
     @Override
     public CustomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.event_card_layout, parent, false);
-        CustomViewHolder viewHolder = new CustomViewHolder(v);
-        return viewHolder;
+        return new CustomViewHolder(v);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull CustomViewHolder holder, int position) {
         holder.tvEventId.setText(data.get(position).getEventId());
@@ -49,7 +50,7 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
         return 0;
     }
 
-    public class CustomViewHolder extends RecyclerView.ViewHolder {
+    public static class CustomViewHolder extends RecyclerView.ViewHolder {
 
         public TextView tvEventId;
         public TextView tvEventName;

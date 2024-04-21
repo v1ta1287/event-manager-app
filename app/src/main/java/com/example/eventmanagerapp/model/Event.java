@@ -3,7 +3,6 @@ package com.example.eventmanagerapp.model;
 import com.example.eventmanagerapp.InvalidCategoryIdException;
 import com.example.eventmanagerapp.InvalidNameException;
 import com.example.eventmanagerapp.PositiveIntegerException;
-import com.example.eventmanagerapp.controller.util.SharedPreferencesUtility;
 
 import java.util.ArrayList;
 import java.util.Objects;

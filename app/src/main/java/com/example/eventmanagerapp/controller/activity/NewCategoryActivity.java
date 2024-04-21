@@ -12,6 +12,9 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.example.eventmanagerapp.InvalidCategoryIdException;
+import com.example.eventmanagerapp.InvalidNameException;
+import com.example.eventmanagerapp.PositiveIntegerException;
 import com.example.eventmanagerapp.R;
 import com.example.eventmanagerapp.controller.util.IdGeneratorUtility;
 import com.example.eventmanagerapp.controller.util.SharedPreferencesUtility;
@@ -38,16 +41,19 @@ public class NewCategoryActivity extends AppCompatActivity {
     }
 
 
-    public void onSaveButton(View view){
-        // save filled out category to shared preferences and show success message
-        // first check that name is not empty
-        if (categoryName.getText().toString().length() > 0){
-            String randomCategoryId = IdGeneratorUtility.generateCategoryId();
+    public void onSaveButton(View view) {
+        String randomCategoryId = IdGeneratorUtility.generateCategoryId();
+        String categoryEventCount;
+        if (categoryCount.getText().toString().equals("")){
+            categoryEventCount = "0";
+        } else {
+            categoryEventCount = categoryCount.getText().toString();
+        }
 
+        try {
             Category newCategory = new Category(randomCategoryId, categoryName.getText().toString(),
-                    Integer.parseInt(categoryCount.getText().toString()), Boolean.parseBoolean(categoryIsActive.getText().toString()));
+                    Integer.parseInt(categoryEventCount), Boolean.parseBoolean(categoryIsActive.getText().toString()));
 
-            // save to shared preferences
             SharedPreferencesUtility.saveCategoryToSharedPreference(getApplicationContext(), newCategory);
             Toast.makeText(getApplicationContext(), "Category saved successfully: " + randomCategoryId, Toast.LENGTH_LONG).show();
             categoryId.setText(randomCategoryId);
@@ -55,12 +61,12 @@ public class NewCategoryActivity extends AppCompatActivity {
             Intent intent = new Intent(this, DashboardActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivityIfNeeded(intent, 0);
-        }
-        else {
-            Toast.makeText(getApplicationContext(), "Name field cannot be empty", Toast.LENGTH_LONG).show();
+        } catch (InvalidNameException e) {
+            Toast.makeText(getApplicationContext(), "Invalid category name", Toast.LENGTH_LONG).show();
+        } catch (NumberFormatException | PositiveIntegerException e) {
+            Toast.makeText(getApplicationContext(), "Invalid event count", Toast.LENGTH_LONG).show();
+            categoryCount.setText("0");
         }
     }
-
-
 
 }

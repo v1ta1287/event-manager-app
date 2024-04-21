@@ -17,6 +17,9 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.example.eventmanagerapp.InvalidCategoryIdException;
+import com.example.eventmanagerapp.InvalidNameException;
+import com.example.eventmanagerapp.PositiveIntegerException;
 import com.example.eventmanagerapp.R;
 import com.example.eventmanagerapp.controller.fragment.FragmentListCategory;
 import com.example.eventmanagerapp.controller.util.IdGeneratorUtility;
@@ -31,8 +34,6 @@ public class DashboardActivity extends AppCompatActivity {
     DrawerLayout drawerlayout;
     NavigationView navigationView;
     Toolbar toolbar;
-    public ActionBarDrawerToggle actionBarDrawerToggle;
-
     EditText eventName;
     EditText eventCategoryId;
     EditText eventTickets;
@@ -74,17 +75,26 @@ public class DashboardActivity extends AppCompatActivity {
 
     public void onFabClick(View view) {
         String randomEventId = IdGeneratorUtility.generateEventId();
+        try {
+            Event newEvent = new Event(randomEventId, eventCategoryId.getText().toString(),
+                    eventName.getText().toString(),
+                    Integer.parseInt(eventTickets.getText().toString()),
+                    Boolean.parseBoolean(eventIsActive.getText().toString()),
+                    SharedPreferencesUtility.getCategoriesFromSharedPreferences(getApplicationContext()));
+            SharedPreferencesUtility.saveEventToSharedPreference(getApplicationContext(), newEvent);
+            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+        } catch (InvalidNameException e){
+            Toast.makeText(getApplicationContext(), "Invalid event name", Toast.LENGTH_LONG).show();
+        } catch (NumberFormatException | PositiveIntegerException e){
+            Toast.makeText(getApplicationContext(), "Invalid tickets available", Toast.LENGTH_LONG).show();
+        } catch (InvalidCategoryIdException e) {
+            Toast.makeText(getApplicationContext(), "Category does not exist", Toast.LENGTH_LONG).show();
+        }
 
-        Event newEvent = new Event(randomEventId, eventCategoryId.getText().toString(),
-                eventName.getText().toString(),
-                Integer.parseInt(eventTickets.getText().toString()),
-                Boolean.parseBoolean(eventIsActive.getText().toString()));
 
         // save to shared preferences
-        SharedPreferencesUtility.saveEventToSharedPreference(getApplicationContext(), newEvent);
 
-        Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
     }
 
     public void clearForm() {
@@ -125,6 +135,7 @@ public class DashboardActivity extends AppCompatActivity {
     public void startLoginButton(){
         // switch to activity that shows fruit details
         Intent intent = new Intent(this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
 
@@ -139,7 +150,6 @@ public class DashboardActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             // get the id of the selected item
             int id = item.getItemId();
-
             if (id == R.id.option_view_categories) {
                 startCategoryListButton();
             } else if (id == R.id.option_add_category) {

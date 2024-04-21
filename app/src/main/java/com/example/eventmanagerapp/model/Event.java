@@ -22,6 +22,7 @@ public class Event {
         if (ticketsAvailable < 0) {
             throw new PositiveIntegerException("Tickets available is invalid");
         }
+
         boolean isValidCategoryId = false;
         for (Category category : categoryArrayList) {
             if (Objects.equals(categoryId, category.getCategoryId())){

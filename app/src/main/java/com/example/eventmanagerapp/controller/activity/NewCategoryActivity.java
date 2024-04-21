@@ -52,7 +52,7 @@ public class NewCategoryActivity extends AppCompatActivity {
 
         try {
             Category newCategory = new Category(randomCategoryId, categoryName.getText().toString(),
-                    Integer.parseInt(categoryEventCount), Boolean.parseBoolean(categoryIsActive.getText().toString()));
+                    Integer.parseInt(categoryEventCount), categoryIsActive.isChecked());
 
             SharedPreferencesUtility.saveCategoryToSharedPreference(getApplicationContext(), newCategory);
             Toast.makeText(getApplicationContext(), "Category saved successfully: " + randomCategoryId, Toast.LENGTH_LONG).show();

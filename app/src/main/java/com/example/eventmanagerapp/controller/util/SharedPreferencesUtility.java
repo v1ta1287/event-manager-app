@@ -95,11 +95,6 @@ public class SharedPreferencesUtility {
     }
 
     public static void clearEventsFromSharedPreferences(Context context){
-        SharedPreferences eventSharedPreferences = context.getSharedPreferences(eventSharedPreferenceFile, Context.MODE_PRIVATE);
-        SharedPreferences.Editor eventEditor = eventSharedPreferences.edit();
-        eventEditor.putString(eventSharedPreferenceString, "[]");
-        eventEditor.apply();
-
         SharedPreferences categorySharedPreferences = context.getSharedPreferences(categorySharedPreferenceFile, Context.MODE_PRIVATE);
         SharedPreferences.Editor categoryEditor = categorySharedPreferences.edit();
         ArrayList<Event> eventArrayList = getEventsFromSharedPreferences(context);
@@ -117,7 +112,38 @@ public class SharedPreferencesUtility {
         String updatedCategories = gson.toJson(categoryArrayList);
         categoryEditor.putString(categorySharedPreferenceString, updatedCategories);
         categoryEditor.apply();
+
+        SharedPreferences eventSharedPreferences = context.getSharedPreferences(eventSharedPreferenceFile, Context.MODE_PRIVATE);
+        SharedPreferences.Editor eventEditor = eventSharedPreferences.edit();
+        eventEditor.putString(eventSharedPreferenceString, "[]");
+        eventEditor.apply();
     }
 
+    public static void undoAddEventToSharedPreferences(Context context) {
+        SharedPreferences eventSharedPreferences = context.getSharedPreferences(eventSharedPreferenceFile, Context.MODE_PRIVATE);
+        SharedPreferences.Editor eventEditor = eventSharedPreferences.edit();
 
+        ArrayList<Event> eventArrayList = getEventsFromSharedPreferences(context);
+        int mostRecentIndex = eventArrayList.size() - 1;
+        String mostRecentEventCategoryId = eventArrayList.get(mostRecentIndex).getCategoryId();
+        eventArrayList.remove(mostRecentIndex);
+        Gson gson = new Gson();
+        String updatedEvents = gson.toJson(eventArrayList);
+        eventEditor.putString(eventSharedPreferenceString, updatedEvents);
+        eventEditor.apply();
+
+        SharedPreferences categorySharedPreferences = context.getSharedPreferences(categorySharedPreferenceFile, Context.MODE_PRIVATE);
+        SharedPreferences.Editor categoryEditor = categorySharedPreferences.edit();
+        ArrayList<Category> categoryArrayList = getCategoriesFromSharedPreferences(context);
+
+        for (Category category: categoryArrayList) {
+            if (Objects.equals(mostRecentEventCategoryId, category.getCategoryId())){
+                category.setEventCount(category.getEventCount() - 1);
+            }
+        }
+
+        String updatedCategories = gson.toJson(categoryArrayList);
+        categoryEditor.putString(categorySharedPreferenceString, updatedCategories);
+        categoryEditor.apply();
+    }
 }

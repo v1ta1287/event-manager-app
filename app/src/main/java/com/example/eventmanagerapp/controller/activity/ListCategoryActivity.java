@@ -11,6 +11,10 @@ import com.example.eventmanagerapp.controller.fragment.FragmentListCategory;
 
 import java.util.Objects;
 
+/**
+ * Controller for page that lists categories
+ * Not much logic is required for this page as most of it is handled by the fragment
+ */
 public class ListCategoryActivity extends AppCompatActivity {
 
     @Override

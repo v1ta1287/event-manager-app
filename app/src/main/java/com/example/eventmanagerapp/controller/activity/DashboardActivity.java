@@ -28,6 +28,11 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
+/**
+ * Dashboard activity controller
+ * Handles logic specific to dashboard UI features
+ * The dashboard is the central page after a user successfully logs in
+ */
 public class DashboardActivity extends AppCompatActivity {
     DrawerLayout drawerlayout;
     NavigationView navigationView;
@@ -62,6 +67,7 @@ public class DashboardActivity extends AppCompatActivity {
         eventIsActive = findViewById((R.id.eventActiveSwitch));
         addEventFab = findViewById((R.id.fabAddEvent));
 
+        // attach category list fragment when dashboard is started
         getSupportFragmentManager().beginTransaction().replace(R.id.dashboard_fragment,new FragmentListCategory()).addToBackStack("f2").commit();
     }
 
@@ -74,11 +80,16 @@ public class DashboardActivity extends AppCompatActivity {
     public void onFabClick(View view) {
         String randomEventId = IdGeneratorUtility.generateEventId();
         String eventTicketsAvailable;
+
+        // if eventTickets is left blank, default to 0
         if (eventTickets.getText().toString().equals("")){
             eventTicketsAvailable = "0";
         } else {
             eventTicketsAvailable = eventTickets.getText().toString();
         }
+
+        // try creating a new Event object and print the appropriate toast error message
+        // if input validation fails
         try {
             Event newEvent = new Event(randomEventId, eventCategoryId.getText().toString(),
                     eventName.getText().toString(),
@@ -88,6 +99,8 @@ public class DashboardActivity extends AppCompatActivity {
             SharedPreferencesUtility.saveEventToSharedPreference(getApplicationContext(), newEvent);
             getSupportFragmentManager().beginTransaction().replace(R.id.dashboard_fragment,new FragmentListCategory()).addToBackStack("f2").commit();
 
+            // after saving a new Event object to SharedPreferences, show a success Snackbar which
+            // also gives the user an option to undo the most recent Event object save
             Snackbar snackbar = Snackbar.make(view, "Event " + randomEventId + " successfully added", Snackbar.LENGTH_LONG)
                     .setAction("Undo Save", v -> {
                         SharedPreferencesUtility.undoAddEventToSharedPreferences(getApplicationContext());
@@ -111,6 +124,7 @@ public class DashboardActivity extends AppCompatActivity {
         eventIsActive.setChecked(false);
     }
 
+    // Options menu options
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int itemId = item.getItemId();
@@ -152,10 +166,10 @@ public class DashboardActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    // Navigation drawer options
     class MyNavigationListener implements NavigationView.OnNavigationItemSelectedListener {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            // get the id of the selected item
             int id = item.getItemId();
             if (id == R.id.option_view_categories) {
                 startCategoryListButton();
@@ -166,9 +180,7 @@ public class DashboardActivity extends AppCompatActivity {
             } else if (id == R.id.option_logout) {
                 startLoginButton();
             }
-            // close the drawer
             drawerlayout.closeDrawers();
-            // tell the OS
             return true;
         }
     }

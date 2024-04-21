@@ -19,6 +19,9 @@ import com.example.eventmanagerapp.model.Category;
 import java.util.ArrayList;
 
 
+/**
+ * Controller for category list fragment
+ */
 public class FragmentListCategory extends Fragment {
     ArrayList<Category> listCategories = new ArrayList<>();
     CategoryRecyclerAdapter recyclerAdapter;
@@ -46,15 +49,16 @@ public class FragmentListCategory extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         recyclerView = view.findViewById(R.id.categoryRecyclerView);
 
-// A Linear RecyclerView.LayoutManager implementation which provides similar functionality to ListView.
+        // A Linear RecyclerView.LayoutManager implementation which provides similar functionality to ListView.
         layoutManager = new LinearLayoutManager(getContext());
-// Also StaggeredGridLayoutManager and GridLayoutManager or a custom Layout manager
+        // Also StaggeredGridLayoutManager and GridLayoutManager or a custom Layout manager
         recyclerView.setLayoutManager(layoutManager);
 
         recyclerAdapter = new CategoryRecyclerAdapter();
         recyclerAdapter.setData(listCategories);
         recyclerView.setAdapter(recyclerAdapter);
 
+        // read event data from SharedPreferences
         ArrayList<Category> categoryListFromSharedPreference = SharedPreferencesUtility.getCategoriesFromSharedPreferences(requireActivity());
         listCategories.addAll(categoryListFromSharedPreference);
     }

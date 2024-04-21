@@ -11,6 +11,11 @@ import android.widget.Toast;
 
 import com.example.eventmanagerapp.R;
 
+/**
+ * Controller for user registration page
+ * SharedPreference logic is still implemented as part of the controller from legacy code
+ * In the future, this will be moved to SharedPreferencesUtility
+ */
 public class RegisterActivity extends AppCompatActivity {
     EditText username;
     EditText password;

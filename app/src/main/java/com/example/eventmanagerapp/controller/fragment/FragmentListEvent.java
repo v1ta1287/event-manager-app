@@ -18,6 +18,9 @@ import com.example.eventmanagerapp.model.Event;
 
 import java.util.ArrayList;
 
+/**
+ * Controller for event list fragment
+ */
 public class FragmentListEvent extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
@@ -50,17 +53,18 @@ public class FragmentListEvent extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         recyclerView = view.findViewById(R.id.eventRecylerView);
 
-// A Linear RecyclerView.LayoutManager implementation which provides similar functionality to ListView.
+        // A Linear RecyclerView.LayoutManager implementation which provides similar functionality to ListView.
         layoutManager = new LinearLayoutManager(getContext());
-// Also StaggeredGridLayoutManager and GridLayoutManager or a custom Layout manager
+        // Also StaggeredGridLayoutManager and GridLayoutManager or a custom Layout manager
         recyclerView.setLayoutManager(layoutManager);
 
         recyclerAdapter = new EventRecyclerAdapter();
         recyclerAdapter.setData(listEvents);
         recyclerView.setAdapter(recyclerAdapter);
 
-        ArrayList<Event> categoryListFromSharedPreference = SharedPreferencesUtility.getEventsFromSharedPreferences(requireActivity());
-        listEvents.addAll(categoryListFromSharedPreference);
+        // read event data from SharedPreferences
+        ArrayList<Event> eventListFromSharedPreference = SharedPreferencesUtility.getEventsFromSharedPreferences(requireActivity());
+        listEvents.addAll(eventListFromSharedPreference);
 
     }
     @Override

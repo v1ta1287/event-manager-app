@@ -19,6 +19,10 @@ import com.example.eventmanagerapp.controller.util.IdGeneratorUtility;
 import com.example.eventmanagerapp.controller.util.SharedPreferencesUtility;
 import com.example.eventmanagerapp.model.Category;
 
+/**
+ * Controller for new category activity
+ * Handles form input logic
+ */
 
 public class NewCategoryActivity extends AppCompatActivity {
     EditText categoryName;
@@ -43,12 +47,16 @@ public class NewCategoryActivity extends AppCompatActivity {
     public void onSaveButton(View view) {
         String randomCategoryId = IdGeneratorUtility.generateCategoryId();
         String categoryEventCount;
+
+        // if categoryCount is left blank, default to 0
         if (categoryCount.getText().toString().equals("")){
             categoryEventCount = "0";
         } else {
             categoryEventCount = categoryCount.getText().toString();
         }
 
+        // try creating a new Category object and print the appropriate toast error message
+        // if input validation fails
         try {
             Category newCategory = new Category(randomCategoryId, categoryName.getText().toString(),
                     Integer.parseInt(categoryEventCount), categoryIsActive.isChecked());
@@ -57,6 +65,7 @@ public class NewCategoryActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Category saved successfully: " + randomCategoryId, Toast.LENGTH_LONG).show();
             categoryId.setText(randomCategoryId);
 
+            // return to DashboardActivity without starting a new activity, preventing fragment refresh
             Intent intent = new Intent(this, DashboardActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivityIfNeeded(intent, 0);

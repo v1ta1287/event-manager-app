@@ -2,6 +2,9 @@ package com.example.eventmanagerapp.controller.util;
 
 import java.util.Random;
 
+/**
+ * Utility functions for generating event and category IDs
+ */
 public class IdGeneratorUtility {
     // generate random category id based on assignment specs
     public static String generateCategoryId() {

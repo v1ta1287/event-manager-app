@@ -1,5 +1,8 @@
 package com.example.eventmanagerapp.controller.util;
 
+/**
+ * Currently not in use
+ */
 public class PrefillSMSUtility {
 
     // Validates SMS message and prefills category form if the SMS message is valid

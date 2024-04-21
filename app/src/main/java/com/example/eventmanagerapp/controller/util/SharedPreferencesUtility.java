@@ -12,6 +12,10 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Objects;
 
+/**
+ * Utility functions for SharedPreferences access
+ * Need implement functionality for user access
+ */
 public class SharedPreferencesUtility {
     private final static String categorySharedPreferenceFile = "CATEGORY_LIST";
     private final static String categorySharedPreferenceString = "categories";

@@ -14,6 +14,10 @@ import com.example.eventmanagerapp.model.Category;
 
 import java.util.ArrayList;
 
+/**
+ * Controller for category recycler adapter
+ * Handles recycler display logic
+ */
 public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecyclerAdapter.CustomViewHolder>{
     ArrayList<Category> data = new ArrayList<>();
     public void setData(ArrayList<Category> data) {

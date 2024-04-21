@@ -7,7 +7,9 @@ import android.content.Intent;
 import android.provider.Telephony;
 import android.telephony.SmsMessage;
 
-
+/**
+ * Currently not in use
+ */
 public class SMSReceiver extends BroadcastReceiver {
     public static final String SMS_FILTER = "SMS_FILTER";
 

@@ -14,6 +14,10 @@ import com.example.eventmanagerapp.model.Event;
 
 import java.util.ArrayList;
 
+/**
+ * Controller for event recycler adapter
+ * Handles recycler display logic
+ */
 public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdapter.CustomViewHolder> {
     ArrayList<Event> data = new ArrayList<>();
     public void setData(ArrayList<Event> data) {

@@ -5,9 +5,9 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import com.example.eventmanagerapp.InvalidCategoryIdException;
-import com.example.eventmanagerapp.InvalidNameException;
-import com.example.eventmanagerapp.PositiveIntegerException;
+import com.example.eventmanagerapp.data.modelValidator.InvalidCategoryIdException;
+import com.example.eventmanagerapp.data.modelValidator.InvalidNameException;
+import com.example.eventmanagerapp.data.modelValidator.PositiveIntegerException;
 
 import java.util.ArrayList;
 import java.util.Objects;

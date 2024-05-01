@@ -1,8 +1,5 @@
 package com.example.eventmanagerapp.data.modelValidator;
 
-import com.example.eventmanagerapp.InvalidCategoryIdException;
-import com.example.eventmanagerapp.InvalidNameException;
-import com.example.eventmanagerapp.PositiveIntegerException;
 import com.example.eventmanagerapp.data.model.Category;
 
 public class CategoryValidator {

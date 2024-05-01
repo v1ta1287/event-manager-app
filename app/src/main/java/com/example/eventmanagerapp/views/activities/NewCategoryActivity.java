@@ -13,12 +13,11 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
 
-import com.example.eventmanagerapp.InvalidNameException;
-import com.example.eventmanagerapp.PositiveIntegerException;
+import com.example.eventmanagerapp.data.modelValidator.InvalidNameException;
+import com.example.eventmanagerapp.data.modelValidator.PositiveIntegerException;
 import com.example.eventmanagerapp.R;
 import com.example.eventmanagerapp.data.modelValidator.CategoryValidator;
 import com.example.eventmanagerapp.utilities.IdGeneratorUtility;
-import com.example.eventmanagerapp.utilities.SharedPreferencesUtility;
 import com.example.eventmanagerapp.data.model.Category;
 import com.example.eventmanagerapp.viewmodels.CategoryViewModel;
 

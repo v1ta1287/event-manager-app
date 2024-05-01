@@ -1,4 +1,4 @@
-package com.example.eventmanagerapp;
+package com.example.eventmanagerapp.data.modelValidator;
 
 public class PositiveIntegerException extends Exception{
     public PositiveIntegerException(String message){

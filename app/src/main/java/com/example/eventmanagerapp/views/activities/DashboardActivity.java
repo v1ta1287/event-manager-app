@@ -16,9 +16,9 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
 
-import com.example.eventmanagerapp.InvalidCategoryIdException;
-import com.example.eventmanagerapp.InvalidNameException;
-import com.example.eventmanagerapp.PositiveIntegerException;
+import com.example.eventmanagerapp.data.modelValidator.InvalidCategoryIdException;
+import com.example.eventmanagerapp.data.modelValidator.InvalidNameException;
+import com.example.eventmanagerapp.data.modelValidator.PositiveIntegerException;
 import com.example.eventmanagerapp.R;
 import com.example.eventmanagerapp.views.fragments.FragmentListCategory;
 import com.example.eventmanagerapp.utilities.IdGeneratorUtility;

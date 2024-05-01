@@ -5,9 +5,6 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import com.example.eventmanagerapp.InvalidNameException;
-import com.example.eventmanagerapp.PositiveIntegerException;
-
 @Entity(tableName = Category.TABLE_NAME)
 public class Category {
     public static final String TABLE_NAME = "categories";

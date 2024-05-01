@@ -1,4 +1,9 @@
-package com.example.eventmanagerapp.model;
+package com.example.eventmanagerapp.data.model;
+
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 import com.example.eventmanagerapp.InvalidCategoryIdException;
 import com.example.eventmanagerapp.InvalidNameException;
@@ -7,14 +12,30 @@ import com.example.eventmanagerapp.PositiveIntegerException;
 import java.util.ArrayList;
 import java.util.Objects;
 
+@Entity(tableName = Event.TABLE_NAME)
 public class Event {
+    public static final String TABLE_NAME = "events";
+    @PrimaryKey(autoGenerate = true)
+    @NonNull
+    @ColumnInfo(name = "eventId")
+    private int id;
+
+    @ColumnInfo(name = "eventStringId")
     private String eventId;
+
+    @ColumnInfo(name = "categoryStringId")
     private String categoryId;
+
+    @ColumnInfo(name = "eventName")
     private String name;
+
+    @ColumnInfo(name = "ticketsAvailable")
     private int ticketsAvailable;
+
+    @ColumnInfo(name = "isActive")
     private boolean isActive;
 
-    public Event(String eventId, String categoryId, String name, int ticketsAvailable, boolean isActive, ArrayList<Category> categoryArrayList) throws InvalidNameException, PositiveIntegerException, InvalidCategoryIdException {
+    public Event(String eventId, String categoryId, String name, int ticketsAvailable, boolean isActive) throws InvalidNameException, PositiveIntegerException, InvalidCategoryIdException {
         if (!(name.matches("^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$"))){
             throw new InvalidNameException("Event name is invalid");
         }
@@ -22,6 +43,7 @@ public class Event {
             throw new PositiveIntegerException("Tickets available is invalid");
         }
 
+        ArrayList<Category> categoryArrayList = new ArrayList<>();
         boolean isValidCategoryId = false;
         for (Category category : categoryArrayList) {
             if (Objects.equals(categoryId, category.getCategoryId())){
@@ -78,5 +100,13 @@ public class Event {
 
     public void setActive(boolean active) {
         isActive = active;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

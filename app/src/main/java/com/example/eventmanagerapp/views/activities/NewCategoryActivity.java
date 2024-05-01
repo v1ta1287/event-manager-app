@@ -2,6 +2,7 @@ package com.example.eventmanagerapp.views.activities;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -15,9 +16,11 @@ import android.widget.Toast;
 import com.example.eventmanagerapp.InvalidNameException;
 import com.example.eventmanagerapp.PositiveIntegerException;
 import com.example.eventmanagerapp.R;
+import com.example.eventmanagerapp.data.modelValidator.CategoryValidator;
 import com.example.eventmanagerapp.utilities.IdGeneratorUtility;
 import com.example.eventmanagerapp.utilities.SharedPreferencesUtility;
-import com.example.eventmanagerapp.model.Category;
+import com.example.eventmanagerapp.data.model.Category;
+import com.example.eventmanagerapp.viewmodels.CategoryViewModel;
 
 /**
  * Controller for new category activity
@@ -30,6 +33,7 @@ public class NewCategoryActivity extends AppCompatActivity {
     EditText categoryId;
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     Switch categoryIsActive;
+    CategoryViewModel mCategoryViewModel;
 
     @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
     @Override
@@ -41,6 +45,8 @@ public class NewCategoryActivity extends AppCompatActivity {
         categoryCount = findViewById((R.id.categoryCountEdit));
         categoryIsActive = findViewById((R.id.categoryActiveSwitch));
         categoryId = findViewById((R.id.categoryIdEdit));
+
+        mCategoryViewModel = new ViewModelProvider(this).get(CategoryViewModel.class);
     }
 
 
@@ -54,14 +60,14 @@ public class NewCategoryActivity extends AppCompatActivity {
         } else {
             categoryEventCount = categoryCount.getText().toString();
         }
-
-        // try creating a new Category object and print the appropriate toast error message
-        // if input validation fails
         try {
-            Category newCategory = new Category(randomCategoryId, categoryName.getText().toString(),
+            // try creating a new Category object and print the appropriate toast error message
+            // if input validation fails
+            CategoryValidator newCategoryValidator = new CategoryValidator(randomCategoryId, categoryName.getText().toString(),
                     Integer.parseInt(categoryEventCount), categoryIsActive.isChecked());
 
-            SharedPreferencesUtility.saveCategoryToSharedPreference(getApplicationContext(), newCategory);
+            Category newCategory = newCategoryValidator.getValidatedCategory();
+            mCategoryViewModel.insert(newCategory);
             Toast.makeText(getApplicationContext(), "Category saved successfully: " + randomCategoryId, Toast.LENGTH_LONG).show();
             categoryId.setText(randomCategoryId);
 
@@ -69,12 +75,13 @@ public class NewCategoryActivity extends AppCompatActivity {
             Intent intent = new Intent(this, DashboardActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivityIfNeeded(intent, 0);
-        } catch (InvalidNameException e) {
+        }catch (InvalidNameException e) {
             Toast.makeText(getApplicationContext(), "Invalid category name", Toast.LENGTH_LONG).show();
         } catch (NumberFormatException | PositiveIntegerException e) {
             Toast.makeText(getApplicationContext(), "Invalid event count", Toast.LENGTH_LONG).show();
             categoryCount.setText("0");
         }
+
     }
 
 }

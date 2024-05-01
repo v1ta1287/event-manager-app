@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,7 +15,8 @@ import android.view.ViewGroup;
 import com.example.eventmanagerapp.R;
 import com.example.eventmanagerapp.adapters.CategoryRecyclerAdapter;
 import com.example.eventmanagerapp.utilities.SharedPreferencesUtility;
-import com.example.eventmanagerapp.model.Category;
+import com.example.eventmanagerapp.data.model.Category;
+import com.example.eventmanagerapp.viewmodels.CategoryViewModel;
 
 import java.util.ArrayList;
 
@@ -27,6 +29,8 @@ public class FragmentListCategory extends Fragment {
     CategoryRecyclerAdapter recyclerAdapter;
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
+
+    CategoryViewModel mCategoryViewModel;
 
     public FragmentListCategory() {
         // Required empty public constructor
@@ -58,9 +62,11 @@ public class FragmentListCategory extends Fragment {
         recyclerAdapter.setData(listCategories);
         recyclerView.setAdapter(recyclerAdapter);
 
-        // read event data from SharedPreferences
-        ArrayList<Category> categoryListFromSharedPreference = SharedPreferencesUtility.getCategoriesFromSharedPreferences(requireActivity());
-        listCategories.addAll(categoryListFromSharedPreference);
+        mCategoryViewModel = new ViewModelProvider(this).get(CategoryViewModel.class);
+        mCategoryViewModel.getAllCategories().observe(getViewLifecycleOwner(), newData -> {
+            recyclerAdapter.setData(newData);
+        });
+
     }
 
     @Override

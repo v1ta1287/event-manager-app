@@ -10,17 +10,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.eventmanagerapp.R;
-import com.example.eventmanagerapp.model.Category;
+import com.example.eventmanagerapp.data.model.Category;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Controller for category recycler adapter
  * Handles recycler display logic
  */
 public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecyclerAdapter.CustomViewHolder>{
-    ArrayList<Category> data = new ArrayList<>();
-    public void setData(ArrayList<Category> data) {
+    List<Category> data;
+    public void setData(List<Category> data) {
         this.data = data;
     }
     @NonNull

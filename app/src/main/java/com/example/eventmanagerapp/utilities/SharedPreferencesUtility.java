@@ -3,8 +3,8 @@ package com.example.eventmanagerapp.utilities;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.example.eventmanagerapp.model.Category;
-import com.example.eventmanagerapp.model.Event;
+import com.example.eventmanagerapp.data.model.Category;
+import com.example.eventmanagerapp.data.model.Event;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 

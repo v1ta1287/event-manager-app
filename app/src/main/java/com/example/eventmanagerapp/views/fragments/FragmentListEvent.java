@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import com.example.eventmanagerapp.R;
 import com.example.eventmanagerapp.adapters.EventRecyclerAdapter;
 import com.example.eventmanagerapp.utilities.SharedPreferencesUtility;
-import com.example.eventmanagerapp.model.Event;
+import com.example.eventmanagerapp.data.model.Event;
 
 import java.util.ArrayList;
 

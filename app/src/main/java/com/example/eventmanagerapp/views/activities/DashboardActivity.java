@@ -23,7 +23,7 @@ import com.example.eventmanagerapp.R;
 import com.example.eventmanagerapp.views.fragments.FragmentListCategory;
 import com.example.eventmanagerapp.utilities.IdGeneratorUtility;
 import com.example.eventmanagerapp.utilities.SharedPreferencesUtility;
-import com.example.eventmanagerapp.model.Event;
+import com.example.eventmanagerapp.data.model.Event;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -94,8 +94,7 @@ public class DashboardActivity extends AppCompatActivity {
             Event newEvent = new Event(randomEventId, eventCategoryId.getText().toString(),
                     eventName.getText().toString(),
                     Integer.parseInt(eventTicketsAvailable),
-                    eventIsActive.isChecked(),
-                    SharedPreferencesUtility.getCategoriesFromSharedPreferences(getApplicationContext()));
+                    eventIsActive.isChecked() );
             SharedPreferencesUtility.saveEventToSharedPreference(getApplicationContext(), newEvent);
             getSupportFragmentManager().beginTransaction().replace(R.id.dashboard_fragment,new FragmentListCategory()).addToBackStack("f2").commit();
 

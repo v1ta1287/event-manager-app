@@ -1,4 +1,4 @@
-package com.example.eventmanagerapp.controller.fragment;
+package com.example.eventmanagerapp.views.fragments;
 
 import android.os.Bundle;
 
@@ -12,23 +12,27 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.eventmanagerapp.R;
-import com.example.eventmanagerapp.controller.handler.CategoryRecyclerAdapter;
-import com.example.eventmanagerapp.controller.util.SharedPreferencesUtility;
-import com.example.eventmanagerapp.model.Category;
+import com.example.eventmanagerapp.adapters.EventRecyclerAdapter;
+import com.example.eventmanagerapp.utilities.SharedPreferencesUtility;
+import com.example.eventmanagerapp.model.Event;
 
 import java.util.ArrayList;
 
-
 /**
- * Controller for category list fragment
+ * Controller for event list fragment
  */
-public class FragmentListCategory extends Fragment {
-    ArrayList<Category> listCategories = new ArrayList<>();
-    CategoryRecyclerAdapter recyclerAdapter;
+public class FragmentListEvent extends Fragment {
+
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
+
+    ArrayList<Event> listEvents = new ArrayList<>();
+    EventRecyclerAdapter recyclerAdapter;
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
 
-    public FragmentListCategory() {
+    public FragmentListEvent() {
         // Required empty public constructor
     }
 
@@ -41,28 +45,28 @@ public class FragmentListCategory extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_list_category, container, false);
+        return inflater.inflate(R.layout.fragment_list_event, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        recyclerView = view.findViewById(R.id.categoryRecyclerView);
+        recyclerView = view.findViewById(R.id.eventRecylerView);
 
         // A Linear RecyclerView.LayoutManager implementation which provides similar functionality to ListView.
         layoutManager = new LinearLayoutManager(getContext());
         // Also StaggeredGridLayoutManager and GridLayoutManager or a custom Layout manager
         recyclerView.setLayoutManager(layoutManager);
 
-        recyclerAdapter = new CategoryRecyclerAdapter();
-        recyclerAdapter.setData(listCategories);
+        recyclerAdapter = new EventRecyclerAdapter();
+        recyclerAdapter.setData(listEvents);
         recyclerView.setAdapter(recyclerAdapter);
 
         // read event data from SharedPreferences
-        ArrayList<Category> categoryListFromSharedPreference = SharedPreferencesUtility.getCategoriesFromSharedPreferences(requireActivity());
-        listCategories.addAll(categoryListFromSharedPreference);
-    }
+        ArrayList<Event> eventListFromSharedPreference = SharedPreferencesUtility.getEventsFromSharedPreferences(requireActivity());
+        listEvents.addAll(eventListFromSharedPreference);
 
+    }
     @Override
     public void onDetach() {
         super.onDetach();

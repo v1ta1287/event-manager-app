@@ -1,4 +1,4 @@
-package com.example.eventmanagerapp.controller.util;
+package com.example.eventmanagerapp.utilities;
 
 import java.util.Random;
 

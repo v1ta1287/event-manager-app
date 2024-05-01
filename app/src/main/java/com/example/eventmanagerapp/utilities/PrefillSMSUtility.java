@@ -1,4 +1,4 @@
-package com.example.eventmanagerapp.controller.util;
+package com.example.eventmanagerapp.utilities;
 
 /**
  * Currently not in use

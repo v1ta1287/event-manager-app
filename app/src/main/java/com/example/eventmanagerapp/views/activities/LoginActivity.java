@@ -1,4 +1,4 @@
-package com.example.eventmanagerapp.controller.activity;
+package com.example.eventmanagerapp.views.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -19,7 +19,6 @@ import com.example.eventmanagerapp.R;
 public class LoginActivity extends AppCompatActivity {
     EditText username;
     EditText password;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,4 +1,4 @@
-package com.example.eventmanagerapp.controller.handler;
+package com.example.eventmanagerapp.adapters;
 
 import android.annotation.SuppressLint;
 import android.view.LayoutInflater;

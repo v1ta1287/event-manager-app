@@ -1,4 +1,4 @@
-package com.example.eventmanagerapp.controller.util;
+package com.example.eventmanagerapp.utilities;
 
 import android.content.Context;
 import android.content.SharedPreferences;

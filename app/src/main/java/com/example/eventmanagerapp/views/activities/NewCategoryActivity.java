@@ -1,4 +1,4 @@
-package com.example.eventmanagerapp.controller.activity;
+package com.example.eventmanagerapp.views.activities;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,8 +15,8 @@ import android.widget.Toast;
 import com.example.eventmanagerapp.InvalidNameException;
 import com.example.eventmanagerapp.PositiveIntegerException;
 import com.example.eventmanagerapp.R;
-import com.example.eventmanagerapp.controller.util.IdGeneratorUtility;
-import com.example.eventmanagerapp.controller.util.SharedPreferencesUtility;
+import com.example.eventmanagerapp.utilities.IdGeneratorUtility;
+import com.example.eventmanagerapp.utilities.SharedPreferencesUtility;
 import com.example.eventmanagerapp.model.Category;
 
 /**

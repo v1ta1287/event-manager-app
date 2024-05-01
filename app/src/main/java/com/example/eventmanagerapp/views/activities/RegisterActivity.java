@@ -1,4 +1,4 @@
-package com.example.eventmanagerapp.controller.activity;
+package com.example.eventmanagerapp.views.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 

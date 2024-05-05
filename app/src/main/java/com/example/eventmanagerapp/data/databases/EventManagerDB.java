@@ -7,6 +7,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import com.example.eventmanagerapp.data.dao.CategoryDao;
+import com.example.eventmanagerapp.data.dao.EventDao;
 import com.example.eventmanagerapp.data.model.Category;
 import com.example.eventmanagerapp.data.model.Event;
 
@@ -20,6 +21,7 @@ public abstract class EventManagerDB extends RoomDatabase {
     public static final String EVENT_MANAGER_DATABASE_NAME = "event_manager_database_v2";
 
     public abstract CategoryDao categoryDao();
+    public abstract EventDao eventDao();
 
     // marking the instance as volatile to ensure atomic access to the variable
     private static volatile EventManagerDB INSTANCE;

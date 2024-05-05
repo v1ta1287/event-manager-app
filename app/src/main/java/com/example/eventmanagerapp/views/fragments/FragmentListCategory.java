@@ -29,7 +29,6 @@ public class FragmentListCategory extends Fragment {
     CategoryRecyclerAdapter recyclerAdapter;
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
-
     CategoryViewModel mCategoryViewModel;
 
     public FragmentListCategory() {
@@ -65,6 +64,7 @@ public class FragmentListCategory extends Fragment {
         mCategoryViewModel = new ViewModelProvider(this).get(CategoryViewModel.class);
         mCategoryViewModel.getAllCategories().observe(getViewLifecycleOwner(), newData -> {
             recyclerAdapter.setData(newData);
+            recyclerAdapter.notifyDataSetChanged();
         });
 
     }

@@ -35,26 +35,7 @@ public class Event {
     @ColumnInfo(name = "isActive")
     private boolean isActive;
 
-    public Event(String eventId, String categoryId, String name, int ticketsAvailable, boolean isActive) throws InvalidNameException, PositiveIntegerException, InvalidCategoryIdException {
-        if (!(name.matches("^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$"))){
-            throw new InvalidNameException("Event name is invalid");
-        }
-        if (ticketsAvailable < 0) {
-            throw new PositiveIntegerException("Tickets available is invalid");
-        }
-
-        ArrayList<Category> categoryArrayList = new ArrayList<>();
-        boolean isValidCategoryId = false;
-        for (Category category : categoryArrayList) {
-            if (Objects.equals(categoryId, category.getCategoryId())){
-                isValidCategoryId = true;
-                break;
-            }
-        }
-        if (!isValidCategoryId) {
-            throw new InvalidCategoryIdException("Category ID is invalid");
-        }
-
+    public Event(String eventId, String categoryId, String name, int ticketsAvailable, boolean isActive)  {
         this.eventId = eventId;
         this.categoryId = categoryId;
         this.name = name;

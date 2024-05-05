@@ -5,10 +5,15 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,10 +21,14 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.example.eventmanagerapp.data.model.Category;
+import com.example.eventmanagerapp.data.modelValidator.EventValidator;
 import com.example.eventmanagerapp.data.modelValidator.InvalidCategoryIdException;
 import com.example.eventmanagerapp.data.modelValidator.InvalidNameException;
 import com.example.eventmanagerapp.data.modelValidator.PositiveIntegerException;
 import com.example.eventmanagerapp.R;
+import com.example.eventmanagerapp.viewmodels.CategoryViewModel;
+import com.example.eventmanagerapp.viewmodels.EventViewModel;
 import com.example.eventmanagerapp.views.fragments.FragmentListCategory;
 import com.example.eventmanagerapp.utilities.IdGeneratorUtility;
 import com.example.eventmanagerapp.utilities.SharedPreferencesUtility;
@@ -27,6 +36,9 @@ import com.example.eventmanagerapp.data.model.Event;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Dashboard activity controller
@@ -44,6 +56,10 @@ public class DashboardActivity extends AppCompatActivity {
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     Switch eventIsActive;
     FloatingActionButton addEventFab;
+
+    CategoryViewModel mCategoryViewModel;
+    List<Category> categoryList;
+    EventViewModel mEventViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +85,17 @@ public class DashboardActivity extends AppCompatActivity {
 
         // attach category list fragment when dashboard is started
         getSupportFragmentManager().beginTransaction().replace(R.id.dashboard_fragment,new FragmentListCategory()).addToBackStack("f2").commit();
+
+        mCategoryViewModel = new ViewModelProvider(this).get(CategoryViewModel.class);
+        categoryList = new ArrayList<>();
+        mCategoryViewModel.getAllCategories().observe(this, newData -> {
+            categoryList.addAll(newData);
+        });
+
+        mEventViewModel = new ViewModelProvider(this).get(EventViewModel.class);
+
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -91,11 +117,12 @@ public class DashboardActivity extends AppCompatActivity {
         // try creating a new Event object and print the appropriate toast error message
         // if input validation fails
         try {
-            Event newEvent = new Event(randomEventId, eventCategoryId.getText().toString(),
+            EventValidator newEventValidator = new EventValidator(randomEventId, eventCategoryId.getText().toString(),
                     eventName.getText().toString(),
                     Integer.parseInt(eventTicketsAvailable),
-                    eventIsActive.isChecked() );
-            SharedPreferencesUtility.saveEventToSharedPreference(getApplicationContext(), newEvent);
+                    eventIsActive.isChecked(), categoryList);
+            Event newEvent = newEventValidator.getValidatedEvent();
+            mEventViewModel.insert(newEvent);
             getSupportFragmentManager().beginTransaction().replace(R.id.dashboard_fragment,new FragmentListCategory()).addToBackStack("f2").commit();
 
             // after saving a new Event object to SharedPreferences, show a success Snackbar which

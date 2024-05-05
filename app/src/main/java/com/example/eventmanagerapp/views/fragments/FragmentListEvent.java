@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,6 +16,8 @@ import com.example.eventmanagerapp.R;
 import com.example.eventmanagerapp.adapters.EventRecyclerAdapter;
 import com.example.eventmanagerapp.utilities.SharedPreferencesUtility;
 import com.example.eventmanagerapp.data.model.Event;
+import com.example.eventmanagerapp.viewmodels.CategoryViewModel;
+import com.example.eventmanagerapp.viewmodels.EventViewModel;
 
 import java.util.ArrayList;
 
@@ -31,6 +34,7 @@ public class FragmentListEvent extends Fragment {
     EventRecyclerAdapter recyclerAdapter;
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
+    EventViewModel mEventViewModel;
 
     public FragmentListEvent() {
         // Required empty public constructor
@@ -62,9 +66,11 @@ public class FragmentListEvent extends Fragment {
         recyclerAdapter.setData(listEvents);
         recyclerView.setAdapter(recyclerAdapter);
 
-        // read event data from SharedPreferences
-        ArrayList<Event> eventListFromSharedPreference = SharedPreferencesUtility.getEventsFromSharedPreferences(requireActivity());
-        listEvents.addAll(eventListFromSharedPreference);
+        mEventViewModel = new ViewModelProvider(this).get(EventViewModel.class);
+        mEventViewModel.getAllEvents().observe(getViewLifecycleOwner(), newData -> {
+            recyclerAdapter.setData(newData);
+            recyclerAdapter.notifyDataSetChanged();
+        });
 
     }
     @Override

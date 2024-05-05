@@ -18,24 +18,24 @@ public class CategoryRepository  {
     public CategoryRepository(Application application) {
         EventManagerDB db = EventManagerDB.getDatabase(application);
         mCategoryDao = db.categoryDao();
-        mAllCategories = mCategoryDao.getAllCustomer();
+        mAllCategories = mCategoryDao.getAllCategories();
     }
     public LiveData<List<Category>> getAllCategories() {
         return mAllCategories;
     }
-    public void insert(Category customer) {
-        EventManagerDB.databaseWriteExecutor.execute(() -> mCategoryDao.addCustomer(customer));
+    public void insert(Category category) {
+        EventManagerDB.databaseWriteExecutor.execute(() -> mCategoryDao.addCategory(category));
     }
 
     public void deleteAll(){
         EventManagerDB.databaseWriteExecutor.execute(()->{
-            mCategoryDao.deleteAllCustomers();
+            mCategoryDao.deleteAllCategories();
         });
     }
 
     public void deleteByName(String name){
         EventManagerDB.databaseWriteExecutor.execute(()->{
-            mCategoryDao.deleteCustomer(name);
+            mCategoryDao.deleteCategory(name);
         });
     }
 }

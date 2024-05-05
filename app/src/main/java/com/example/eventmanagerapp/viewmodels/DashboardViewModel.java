@@ -39,7 +39,6 @@ public class DashboardViewModel extends AndroidViewModel {
     public void deleteAllEvents(){
         mEventRepository.deleteAll();
     }
-    public void incrementCategoryById(String id){mCategoryRepository.getAllCategories();}
-
+    public void incrementCategoryById(String id){mCategoryRepository.incrementById(id);}
 
 }

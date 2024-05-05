@@ -33,9 +33,9 @@ public class CategoryRepository  {
         });
     }
 
-    public void deleteByName(String name){
+    public void incrementById(String id){
         EventManagerDB.databaseWriteExecutor.execute(()->{
-            mCategoryDao.deleteCategory(name);
+            mCategoryDao.incrementById(id);
         });
     }
 }

@@ -113,8 +113,9 @@ public class DashboardActivity extends AppCompatActivity {
                     eventIsActive.isChecked(), categoryList);
             Event newEvent = newEventValidator.getValidatedEvent();
             mDashboardViewModel.insertEvent(newEvent);
-            getSupportFragmentManager().beginTransaction().replace(R.id.dashboard_fragment,new ListCategoriesFragment()).addToBackStack("f2").commit();
-
+            mDashboardViewModel.incrementCategoryById(eventCategoryId.getText().toString());
+            //getSupportFragmentManager().beginTransaction().replace(R.id.dashboard_fragment,new ListCategoriesFragment()).addToBackStack("f2").commit();
+            Toast.makeText(getApplicationContext(), "Event saved successfully: " + randomEventId, Toast.LENGTH_LONG).show();
 
         } catch (InvalidNameException e){
             Toast.makeText(getApplicationContext(), "Invalid event name", Toast.LENGTH_LONG).show();

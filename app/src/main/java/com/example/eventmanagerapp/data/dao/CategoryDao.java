@@ -14,18 +14,12 @@ public interface CategoryDao {
     @Query("select * from categories")
     LiveData<List<Category>> getAllCategories();
 
-    @Query("select * from categories where categoryName=:name")
-    List<Category> getCategory(String name);
-
     @Insert
     void addCategory(Category category);
-
-    @Query("delete from categories where categoryName=:name")
-    void deleteCategory(String name);
 
     @Query("delete FROM categories")
     void deleteAllCategories();
 
-    @Query("update categories set eventCount = eventCount + 1 where categoryId=:categoryStringId")
+    @Query("update categories set eventCount = eventCount + 1 where categoryStringId=:categoryStringId")
     void incrementById(String categoryStringId);
 }

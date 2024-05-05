@@ -20,9 +20,12 @@ public interface CategoryDao {
     @Insert
     void addCategory(Category category);
 
-    @Query("delete from categories where categoryName= :name")
+    @Query("delete from categories where categoryName=:name")
     void deleteCategory(String name);
 
     @Query("delete FROM categories")
     void deleteAllCategories();
+
+    @Query("update categories set eventCount = eventCount + 1 where categoryId=:categoryStringId")
+    void incrementById(String categoryStringId);
 }

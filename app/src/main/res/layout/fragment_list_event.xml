@@ -5,7 +5,7 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.fragments.FragmentListEvent">
+    tools:context=".views.fragments.ListEventsFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/eventRecylerView"

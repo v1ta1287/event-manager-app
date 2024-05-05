@@ -14,9 +14,8 @@ import android.view.ViewGroup;
 
 import com.example.eventmanagerapp.R;
 import com.example.eventmanagerapp.adapters.CategoryRecyclerAdapter;
-import com.example.eventmanagerapp.utilities.SharedPreferencesUtility;
 import com.example.eventmanagerapp.data.model.Category;
-import com.example.eventmanagerapp.viewmodels.CategoryViewModel;
+import com.example.eventmanagerapp.viewmodels.ListCategoriesViewModel;
 
 import java.util.ArrayList;
 
@@ -24,14 +23,14 @@ import java.util.ArrayList;
 /**
  * Controller for category list fragment
  */
-public class FragmentListCategory extends Fragment {
+public class ListCategoriesFragment extends Fragment {
     ArrayList<Category> listCategories = new ArrayList<>();
     CategoryRecyclerAdapter recyclerAdapter;
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
-    CategoryViewModel mCategoryViewModel;
+    ListCategoriesViewModel mListCategoriesViewModel;
 
-    public FragmentListCategory() {
+    public ListCategoriesFragment() {
         // Required empty public constructor
     }
 
@@ -61,8 +60,8 @@ public class FragmentListCategory extends Fragment {
         recyclerAdapter.setData(listCategories);
         recyclerView.setAdapter(recyclerAdapter);
 
-        mCategoryViewModel = new ViewModelProvider(this).get(CategoryViewModel.class);
-        mCategoryViewModel.getAllCategories().observe(getViewLifecycleOwner(), newData -> {
+        mListCategoriesViewModel = new ViewModelProvider(this).get(ListCategoriesViewModel.class);
+        mListCategoriesViewModel.getAllCategories().observe(getViewLifecycleOwner(), newData -> {
             recyclerAdapter.setData(newData);
             recyclerAdapter.notifyDataSetChanged();
         });

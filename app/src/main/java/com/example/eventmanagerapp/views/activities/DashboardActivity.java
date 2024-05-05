@@ -5,15 +5,11 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,15 +23,12 @@ import com.example.eventmanagerapp.data.modelValidator.InvalidCategoryIdExceptio
 import com.example.eventmanagerapp.data.modelValidator.InvalidNameException;
 import com.example.eventmanagerapp.data.modelValidator.PositiveIntegerException;
 import com.example.eventmanagerapp.R;
-import com.example.eventmanagerapp.viewmodels.CategoryViewModel;
-import com.example.eventmanagerapp.viewmodels.EventViewModel;
-import com.example.eventmanagerapp.views.fragments.FragmentListCategory;
+import com.example.eventmanagerapp.viewmodels.DashboardViewModel;
+import com.example.eventmanagerapp.views.fragments.ListCategoriesFragment;
 import com.example.eventmanagerapp.utilities.IdGeneratorUtility;
-import com.example.eventmanagerapp.utilities.SharedPreferencesUtility;
 import com.example.eventmanagerapp.data.model.Event;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,9 +50,8 @@ public class DashboardActivity extends AppCompatActivity {
     Switch eventIsActive;
     FloatingActionButton addEventFab;
 
-    CategoryViewModel mCategoryViewModel;
     List<Category> categoryList;
-    EventViewModel mEventViewModel;
+    DashboardViewModel mDashboardViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,15 +76,13 @@ public class DashboardActivity extends AppCompatActivity {
         addEventFab = findViewById((R.id.fabAddEvent));
 
         // attach category list fragment when dashboard is started
-        getSupportFragmentManager().beginTransaction().replace(R.id.dashboard_fragment,new FragmentListCategory()).addToBackStack("f2").commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.dashboard_fragment,new ListCategoriesFragment()).addToBackStack("f2").commit();
 
-        mCategoryViewModel = new ViewModelProvider(this).get(CategoryViewModel.class);
+        mDashboardViewModel = new ViewModelProvider(this).get(DashboardViewModel.class);
         categoryList = new ArrayList<>();
-        mCategoryViewModel.getAllCategories().observe(this, newData -> {
+        mDashboardViewModel.getAllCategories().observe(this, newData -> {
             categoryList.addAll(newData);
         });
-
-        mEventViewModel = new ViewModelProvider(this).get(EventViewModel.class);
 
     }
 
@@ -122,17 +112,10 @@ public class DashboardActivity extends AppCompatActivity {
                     Integer.parseInt(eventTicketsAvailable),
                     eventIsActive.isChecked(), categoryList);
             Event newEvent = newEventValidator.getValidatedEvent();
-            mEventViewModel.insert(newEvent);
-            getSupportFragmentManager().beginTransaction().replace(R.id.dashboard_fragment,new FragmentListCategory()).addToBackStack("f2").commit();
+            mDashboardViewModel.insertEvent(newEvent);
+            getSupportFragmentManager().beginTransaction().replace(R.id.dashboard_fragment,new ListCategoriesFragment()).addToBackStack("f2").commit();
 
-            // after saving a new Event object to SharedPreferences, show a success Snackbar which
-            // also gives the user an option to undo the most recent Event object save
-            Snackbar snackbar = Snackbar.make(view, "Event " + randomEventId + " successfully added", Snackbar.LENGTH_LONG)
-                    .setAction("Undo Save", v -> {
-                        SharedPreferencesUtility.undoAddEventToSharedPreferences(getApplicationContext());
-                        getSupportFragmentManager().beginTransaction().replace(R.id.dashboard_fragment,new FragmentListCategory()).addToBackStack("f2").commit();
-                    });
-            snackbar.show();
+
         } catch (InvalidNameException e){
             Toast.makeText(getApplicationContext(), "Invalid event name", Toast.LENGTH_LONG).show();
         } catch (NumberFormatException | PositiveIntegerException e){
@@ -155,27 +138,25 @@ public class DashboardActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.option_refresh) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.dashboard_fragment,new FragmentListCategory()).addToBackStack("f2").commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.dashboard_fragment,new ListCategoriesFragment()).addToBackStack("f2").commit();
         } else if (itemId == R.id.option_clear_event) {
             clearForm();
         } else if (itemId == R.id.option_delete_categories) {
-            SharedPreferencesUtility.clearCategoriesFromSharedPreferences(getApplicationContext());
-            getSupportFragmentManager().beginTransaction().replace(R.id.dashboard_fragment,new FragmentListCategory()).addToBackStack("f2").commit();
+            mDashboardViewModel.deleteAllCategories();
         } else if (itemId == R.id.option_delete_events){
-            SharedPreferencesUtility.clearEventsFromSharedPreferences(getApplicationContext());
-            getSupportFragmentManager().beginTransaction().replace(R.id.dashboard_fragment,new FragmentListCategory()).addToBackStack("f2").commit();
+            mDashboardViewModel.deleteAllEvents();
         }
         return true;
     }
     public void startCategoryListButton(){
         // switch to activity that shows fruit details
-        Intent intent = new Intent(this, ListCategoryActivity.class);
+        Intent intent = new Intent(this, ShowCategoriesActivity.class);
         startActivity(intent);
     }
 
     public void startEventListButton(){
         // switch to activity that shows fruit details
-        Intent intent = new Intent(this, ListEventActivity.class);
+        Intent intent = new Intent(this, ShowEventsActivity.class);
         startActivity(intent);
     }
 

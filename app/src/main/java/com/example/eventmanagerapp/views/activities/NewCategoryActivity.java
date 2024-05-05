@@ -19,7 +19,7 @@ import com.example.eventmanagerapp.R;
 import com.example.eventmanagerapp.data.modelValidator.CategoryValidator;
 import com.example.eventmanagerapp.utilities.IdGeneratorUtility;
 import com.example.eventmanagerapp.data.model.Category;
-import com.example.eventmanagerapp.viewmodels.CategoryViewModel;
+import com.example.eventmanagerapp.viewmodels.NewCategoryViewModel;
 
 /**
  * Controller for new category activity
@@ -32,7 +32,7 @@ public class NewCategoryActivity extends AppCompatActivity {
     EditText categoryId;
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     Switch categoryIsActive;
-    CategoryViewModel mCategoryViewModel;
+    NewCategoryViewModel mNewCategoryViewModel;
 
     @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
     @Override
@@ -45,7 +45,7 @@ public class NewCategoryActivity extends AppCompatActivity {
         categoryIsActive = findViewById((R.id.categoryActiveSwitch));
         categoryId = findViewById((R.id.categoryIdEdit));
 
-        mCategoryViewModel = new ViewModelProvider(this).get(CategoryViewModel.class);
+        mNewCategoryViewModel = new ViewModelProvider(this).get(NewCategoryViewModel.class);
     }
 
 
@@ -66,7 +66,7 @@ public class NewCategoryActivity extends AppCompatActivity {
                     Integer.parseInt(categoryEventCount), categoryIsActive.isChecked());
 
             Category newCategory = newCategoryValidator.getValidatedCategory();
-            mCategoryViewModel.insert(newCategory);
+            mNewCategoryViewModel.insert(newCategory);
             Toast.makeText(getApplicationContext(), "Category saved successfully: " + randomCategoryId, Toast.LENGTH_LONG).show();
             categoryId.setText(randomCategoryId);
 

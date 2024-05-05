@@ -20,7 +20,7 @@ public interface EventDao {
     @Insert
     void addEvent(Event event);
 
-    @Query("delete from events where eventName= :name")
+    @Query("delete from events where eventName=:name")
     void deleteEvent(String name);
 
     @Query("delete FROM events")

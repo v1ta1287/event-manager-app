@@ -14,17 +14,15 @@ import android.view.ViewGroup;
 
 import com.example.eventmanagerapp.R;
 import com.example.eventmanagerapp.adapters.EventRecyclerAdapter;
-import com.example.eventmanagerapp.utilities.SharedPreferencesUtility;
 import com.example.eventmanagerapp.data.model.Event;
-import com.example.eventmanagerapp.viewmodels.CategoryViewModel;
-import com.example.eventmanagerapp.viewmodels.EventViewModel;
+import com.example.eventmanagerapp.viewmodels.ListEventsViewModel;
 
 import java.util.ArrayList;
 
 /**
  * Controller for event list fragment
  */
-public class FragmentListEvent extends Fragment {
+public class ListEventsFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,9 +32,9 @@ public class FragmentListEvent extends Fragment {
     EventRecyclerAdapter recyclerAdapter;
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
-    EventViewModel mEventViewModel;
+    ListEventsViewModel mListEventsViewModel;
 
-    public FragmentListEvent() {
+    public ListEventsFragment() {
         // Required empty public constructor
     }
 
@@ -66,8 +64,8 @@ public class FragmentListEvent extends Fragment {
         recyclerAdapter.setData(listEvents);
         recyclerView.setAdapter(recyclerAdapter);
 
-        mEventViewModel = new ViewModelProvider(this).get(EventViewModel.class);
-        mEventViewModel.getAllEvents().observe(getViewLifecycleOwner(), newData -> {
+        mListEventsViewModel = new ViewModelProvider(this).get(ListEventsViewModel.class);
+        mListEventsViewModel.getAllEvents().observe(getViewLifecycleOwner(), newData -> {
             recyclerAdapter.setData(newData);
             recyclerAdapter.notifyDataSetChanged();
         });

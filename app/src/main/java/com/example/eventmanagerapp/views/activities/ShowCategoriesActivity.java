@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.eventmanagerapp.R;
-import com.example.eventmanagerapp.views.fragments.FragmentListCategory;
+import com.example.eventmanagerapp.views.fragments.ListCategoriesFragment;
 
 import java.util.Objects;
 
@@ -15,7 +15,7 @@ import java.util.Objects;
  * Controller for page that lists categories
  * Not much logic is required for this page as most of it is handled by the fragment
  */
-public class ListCategoryActivity extends AppCompatActivity {
+public class ShowCategoriesActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +26,7 @@ public class ListCategoryActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentCategory,new FragmentListCategory()).addToBackStack("f2").commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentCategory,new ListCategoriesFragment()).addToBackStack("f2").commit();
     }
 
     @Override

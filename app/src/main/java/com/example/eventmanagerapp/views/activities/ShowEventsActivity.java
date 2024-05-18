@@ -22,6 +22,7 @@ public class ShowEventsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.event_bar_layout);
         Toolbar toolbar = findViewById(R.id.event_toolbar);
+        toolbar.setTitle("View All Events");
 
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);

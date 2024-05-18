@@ -32,6 +32,7 @@ public class NewCategoryActivity extends AppCompatActivity {
     EditText categoryId;
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     Switch categoryIsActive;
+    EditText categoryEventLocation;
     NewCategoryViewModel mNewCategoryViewModel;
 
     @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
@@ -44,6 +45,7 @@ public class NewCategoryActivity extends AppCompatActivity {
         categoryCount = findViewById((R.id.categoryCountEdit));
         categoryIsActive = findViewById((R.id.categoryActiveSwitch));
         categoryId = findViewById((R.id.categoryIdEdit));
+        categoryEventLocation = findViewById(R.id.categoryLocationEdit);
 
         mNewCategoryViewModel = new ViewModelProvider(this).get(NewCategoryViewModel.class);
     }
@@ -63,7 +65,7 @@ public class NewCategoryActivity extends AppCompatActivity {
             // try creating a new Category object and print the appropriate toast error message
             // if input validation fails
             CategoryValidator newCategoryValidator = new CategoryValidator(randomCategoryId, categoryName.getText().toString(),
-                    Integer.parseInt(categoryEventCount), categoryIsActive.isChecked());
+                    Integer.parseInt(categoryEventCount), categoryIsActive.isChecked(), categoryEventLocation.getText().toString());
 
             Category newCategory = newCategoryValidator.getValidatedCategory();
             mNewCategoryViewModel.insert(newCategory);
@@ -74,7 +76,7 @@ public class NewCategoryActivity extends AppCompatActivity {
             Intent intent = new Intent(this, DashboardActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivityIfNeeded(intent, 0);
-        }catch (InvalidNameException e) {
+        } catch (InvalidNameException e) {
             Toast.makeText(getApplicationContext(), "Invalid category name", Toast.LENGTH_LONG).show();
         } catch (NumberFormatException | PositiveIntegerException e) {
             Toast.makeText(getApplicationContext(), "Invalid event count", Toast.LENGTH_LONG).show();

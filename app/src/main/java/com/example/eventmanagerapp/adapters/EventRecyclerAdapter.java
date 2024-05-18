@@ -1,6 +1,8 @@
 package com.example.eventmanagerapp.adapters;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.eventmanagerapp.R;
 import com.example.eventmanagerapp.data.model.Event;
+import com.example.eventmanagerapp.views.activities.EventGoogleResult;
+import com.example.eventmanagerapp.views.activities.GoogleMapActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +47,14 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
         } else {
             holder.tvIsActive.setText("Inactive");
         }
+
+        holder.cardView.setOnClickListener(v -> {
+            String eventName = data.get(position).getName();
+            Context context = holder.cardView.getContext();
+            Intent intent = new Intent(context, EventGoogleResult.class);
+            intent.putExtra("eventName", eventName);
+            context.startActivity(intent);
+        });
     }
 
     @Override
@@ -62,9 +74,11 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
         public TextView tvCategoryId;
         public TextView tvTicketsAvailable;
         public TextView tvIsActive;
+        public View cardView;
 
         public CustomViewHolder(@NonNull View itemView) {
             super(itemView);
+            cardView = itemView;
             tvEventId = itemView.findViewById(R.id.tv_eventid);
             tvEventName = itemView.findViewById(R.id.tv_eventname);
             tvCategoryId = itemView.findViewById(R.id.tv_categoryid);

@@ -115,11 +115,37 @@
         android:id="@+id/saveCategoryButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:onClick="onSaveButton"
+        android:layout_marginTop="20dp"
         android:backgroundTint="@android:color/holo_blue_dark"
+        android:onClick="onSaveButton"
         android:text="Save Category"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/categoryLocationEdit" />
+
+    <TextView
+        android:id="@+id/categoryLocationText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="30dp"
+        android:text="Location"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/categoryActiveSwitch" />
+
+    <EditText
+        android:id="@+id/categoryLocationEdit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="Enter category location"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/white"
+        android:textColorHint="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/categoryLocationText" />
 </androidx.constraintlayout.widget.ConstraintLayout>

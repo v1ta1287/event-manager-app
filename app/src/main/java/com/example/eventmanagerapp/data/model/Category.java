@@ -29,11 +29,12 @@ public class Category {
     @ColumnInfo(name = "isActive")
     private boolean isActive;
 
-    public Category(String categoryId, String name, int eventCount, boolean isActive){
+    public Category(String categoryId, String name, int eventCount, boolean isActive, String eventLocation){
         this.categoryId = categoryId;
         this.name = name;
         this.eventCount = eventCount;
         this.isActive = isActive;
+        this.eventLocation = eventLocation;
     }
 
     public String getCategoryId() {

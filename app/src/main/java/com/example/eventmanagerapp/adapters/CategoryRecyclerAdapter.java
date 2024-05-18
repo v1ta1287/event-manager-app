@@ -1,6 +1,8 @@
 package com.example.eventmanagerapp.adapters;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.eventmanagerapp.R;
 import com.example.eventmanagerapp.data.model.Category;
+import com.example.eventmanagerapp.views.activities.GoogleMapActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -42,6 +44,18 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
         } else {
             holder.tvIsActive.setText("No");
         }
+
+        holder.cardView.setOnClickListener(v -> {
+            String eventLocation = data.get(position).getEventLocation();
+            String categoryName = data.get(position).getName();
+
+            // TODO: Launch new MapsActivity with Country Name in extras
+            Context context = holder.cardView.getContext();
+            Intent intent = new Intent(context, GoogleMapActivity.class);
+            intent.putExtra("location", eventLocation);
+            intent.putExtra("name", categoryName);
+            context.startActivity(intent);
+        });
     }
 
     @Override
@@ -60,9 +74,11 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
         public TextView tvCategoryName;
         public TextView tvEventCount;
         public TextView tvIsActive;
+        public View cardView;
 
         public CustomViewHolder(@NonNull View itemView) {
             super(itemView);
+            cardView = itemView;
             tvCategoryId = itemView.findViewById(R.id.ctv_categoryid);
             tvCategoryName = itemView.findViewById(R.id.ctv_categoryname);
             tvEventCount = itemView.findViewById(R.id.ctv_eventcount);

@@ -22,6 +22,7 @@ public class ShowCategoriesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.category_bar_layout);
         Toolbar toolbar = findViewById(R.id.category_toolbar);
+        toolbar.setTitle("View All Categories");
 
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);

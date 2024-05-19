@@ -4,17 +4,21 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GestureDetectorCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.eventmanagerapp.data.model.Category;
@@ -53,6 +57,9 @@ public class DashboardActivity extends AppCompatActivity {
     List<Category> categoryList;
     DashboardViewModel mDashboardViewModel;
 
+    private GestureDetectorCompat mDetector;
+    TextView tvGesture;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,8 +91,39 @@ public class DashboardActivity extends AppCompatActivity {
             categoryList.addAll(newData);
         });
 
+        View touchpad = findViewById(R.id.touchpad);
+        tvGesture = findViewById(R.id.tvGesture);
+
+        // initialise new instance of CustomGestureDetector class
+        CustomGestureDetector customGestureDetector = new CustomGestureDetector();
+        mDetector = new GestureDetectorCompat(this, customGestureDetector);
+        touchpad.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                mDetector.onTouchEvent(event);
+                return true;
+            }
+        });
     }
 
+    class CustomGestureDetector extends GestureDetector.SimpleOnGestureListener{
+        @SuppressLint("SetTextI18n")
+        @Override
+        public void onLongPress(@NonNull MotionEvent e) {
+            tvGesture.setText("onLongPress");
+            clearForm();
+            super.onLongPress(e);
+        }
+
+        @SuppressLint("SetTextI18n")
+        @Override
+        public boolean onDoubleTap(@NonNull MotionEvent e) {
+            tvGesture.setText("onDoubleTap");
+            addEvent();
+            return super.onDoubleTap(e);
+        }
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -94,6 +132,10 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     public void onFabClick(View view) {
+        addEvent();
+    }
+
+    public void addEvent(){
         String randomEventId = IdGeneratorUtility.generateEventId();
         String eventTicketsAvailable;
 

@@ -33,9 +33,4 @@ public class EventRepository  {
         });
     }
 
-    public void deleteByName(String name){
-        EventManagerDB.databaseWriteExecutor.execute(()->{
-            mEventDao.deleteEvent(name);
-        });
-    }
 }

@@ -266,6 +266,26 @@
             app:layout_constraintStart_toStartOf="parent"
             tools:ignore="UseSwitchCompatOrMaterialXml" />
 
+        <View
+            android:id="@+id/touchpad"
+            android:layout_width="301dp"
+            android:layout_height="218dp"
+            android:layout_marginStart="80dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="80dp"
+            android:background="#00BCD4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/eventActiveSwitch" />
+
+        <TextView
+            android:id="@+id/tvGesture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="@+id/touchpad"
+            app:layout_constraintTop_toTopOf="@+id/touchpad" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
     <com.google.android.material.navigation.NavigationView
         android:layout_width="wrap_content"

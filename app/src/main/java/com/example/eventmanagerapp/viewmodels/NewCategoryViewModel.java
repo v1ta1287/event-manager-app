@@ -4,22 +4,19 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
 
 import com.example.eventmanagerapp.data.model.Category;
-import com.example.eventmanagerapp.data.repositories.CategoryRepository;
-
-import java.util.List;
+import com.example.eventmanagerapp.data.repositories.EventManagerRepository;
 
 public class NewCategoryViewModel extends AndroidViewModel {
-    private CategoryRepository mCategoryRepository;
+    private EventManagerRepository mEventManagerRepository;
 
     public NewCategoryViewModel(@NonNull Application application) {
         super(application);
-        mCategoryRepository = new CategoryRepository(application);
+        mEventManagerRepository = new EventManagerRepository(application);
     }
 
     public void insert(Category category) {
-        mCategoryRepository.insert(category);
+        mEventManagerRepository.insertCategory(category);
     }
 }

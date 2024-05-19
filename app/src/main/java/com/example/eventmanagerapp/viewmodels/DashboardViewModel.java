@@ -8,22 +8,19 @@ import androidx.lifecycle.LiveData;
 
 import com.example.eventmanagerapp.data.model.Category;
 import com.example.eventmanagerapp.data.model.Event;
-import com.example.eventmanagerapp.data.repositories.CategoryRepository;
-import com.example.eventmanagerapp.data.repositories.EventRepository;
+import com.example.eventmanagerapp.data.repositories.EventManagerRepository;
 
 import java.util.List;
 
 public class DashboardViewModel extends AndroidViewModel {
 
-    private CategoryRepository mCategoryRepository;
-    private EventRepository mEventRepository;
+    private EventManagerRepository mEventManagerRepository;
     private LiveData<List<Category>> mAllCategories;
 
     public DashboardViewModel(@NonNull Application application) {
         super(application);
-        mCategoryRepository = new CategoryRepository(application);
-        mEventRepository = new EventRepository(application);
-        mAllCategories = mCategoryRepository.getAllCategories();
+        mEventManagerRepository = new EventManagerRepository(application);
+        mAllCategories = mEventManagerRepository.getAllCategories();
     }
 
     public LiveData<List<Category>> getAllCategories() {
@@ -31,14 +28,15 @@ public class DashboardViewModel extends AndroidViewModel {
     }
 
     public void insertEvent(Event event) {
-        mEventRepository.insert(event);
+        mEventManagerRepository.insertEvent(event);
     }
     public void deleteAllCategories(){
-        mCategoryRepository.deleteAll();
+        mEventManagerRepository.deleteAllCategories();
     }
     public void deleteAllEvents(){
-        mEventRepository.deleteAll();
+        mEventManagerRepository.deleteAllEvents();
     }
-    public void incrementCategoryById(String id){mCategoryRepository.incrementById(id);}
+    public void incrementCategoryById(String id){
+        mEventManagerRepository.incrementById(id);}
 
 }
